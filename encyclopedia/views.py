@@ -71,18 +71,17 @@ def searchEntry(request):
 
 
 def editEntry(request,entry):
-    entry_fields = util.get_entry(entry)
-    content = {
-        'content':entry_fields
-    }
-    ef = EditEntry(content)
-    # if form.is_valid():
-    #     if entry in entrys:
-    #         entry = util.get_entry(entry)
-    #         entry = markdown(entry)
-    #         return render(request, 'encyclopedia/entrys.html',{'entry':entry})
-    #     else:
-    #         return render(request, 'encyclopedia/search-error.html',{'entry':entry})
-    # else:
-    #     return render(request, 'encyclopedia/index.html',context)
-    return render(request, 'encyclopedia/edit.html',{'entry':entry_fields})
+    content = util.get_entry(entry)
+    form = EditEntry(request.POST,initial={'body':content})
+    print(request.POST)
+    if request.method == "POST":
+        print(request.POST)
+        if form.is_valid():
+            Title = request.POST['title']
+            Body = request.POST['body']
+
+            util.save_entry(Title, Body)
+
+            return HttpResponseRedirect("/wikipedia/" + Title)
+    
+    return render(request, "encyclopedia/edit.html", { "title": entry, "body": content})
