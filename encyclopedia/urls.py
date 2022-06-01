@@ -8,5 +8,6 @@ urlpatterns = [
     path("wikipedia/<str:entry>",views.getEntry, name='entry-url'),
     path("wikipedia/<str:entry>/edit",views.editEntry, name='edit-entry'),
     path("random-page",views.randomEntry, name='random-entry'),
-    path("search", views.searchEntry, name='search-entry')
+    path("search", views.searchEntry, name='search-entry'),
+    path("<str:entry>/edit", views.editEntry,name="EditEntry")
 ]
